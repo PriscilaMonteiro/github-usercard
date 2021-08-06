@@ -45,18 +45,44 @@ const cards = document.querySelector('.cards');
     justsml
     luishrd
     bigknell
+
+    https://api.github.com/users/Priscilamonteiro/following
 */
 
-const followersArray = ['sergioribeiro','tetondan','dustinmyers','justsml','luishrd','bigknell'];
+const createFollowingCards = user => {
+	return axios
+		.get(`https://api.github.com/users/${user}/following`)
+		.then(res => {
+			console.log(res.data);
+			return res.data;
+		})
 
-followersArray.forEach(user => {
-axios.get(`https://api.github.com/users/${user}`).then(res => {
-    cards.append(cardMaker(res))
-  })
-  .catch(err => {
-    console.log(err)
-  })
-})
+    .then(followingArray => {
+			followingArray.forEach(following => {
+				return axios
+					.get(`https://api.github.com/users/${following.login}`)
+					.then(res => {
+						const cards = document.querySelector(".cards");
+						cards.appendChild(cardMaker(res));
+					})
+					.catch(err => console.log(err));
+			});
+		})
+		.catch(err => console.log(err));
+};
+createFollowingCards("Priscilamonteiro")
+  
+
+// const followersArray = ['sergioribeiro','tetondan','dustinmyers','justsml','luishrd','bigknell'];
+
+// followersArray.forEach(user => {
+// axios.get(`https://api.github.com/users/${user}`).then(res => {
+//     cards.append(cardMaker(res))
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   })
+// })
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -136,9 +162,5 @@ function cardMaker({data}){
     luishrd
     bigknell
 
-    profile.textContent = `Profile: `;
-  profileURL.textContent = `${data.html_url}`
-  profileURL.setAttribute('href', `${data.html_url}`)
-  profile.appendChild(profileURL)
-o seu profile.appendChild(profileURL) tem que rodar somente depois que vc ja tiver setado o seu profileURL attribute
+    
 */
