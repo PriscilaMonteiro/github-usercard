@@ -94,22 +94,17 @@ function cardMaker({data}){
   const userBio = document.createElement('p')
 
   card.classList.add('card')
-  image.classList.add('img')
   gitName.classList.add('name')
   userName.classList.add('username')
-  userLocation.classList.add('p')
-  profile.classList.add('p')
-  userFollowers.classList.add('p')
-  userFollowing.classList.add('p')
-  userBio.classList.add('p')
+  
 
   card.appendChild(image)
   card.appendChild(cardInfo)
   cardInfo.appendChild(gitName)
   cardInfo.appendChild(userName)
   cardInfo.appendChild(userLocation)
+  
   cardInfo.appendChild(profile)
-  profile.appendChild(profileURL)
   cardInfo.appendChild(userFollowers)
   cardInfo.appendChild(userFollowing)
   cardInfo.appendChild(userBio)
@@ -118,13 +113,15 @@ function cardMaker({data}){
   gitName.textContent = `${data.name}`
   userName.textContent = `${data.login}`
   userLocation.textContent = `Location: ${data.location}`
-  profile.textContent = `Profile: ${data.html_url}`
-  profileURL.src = `${data.html_url}`
+  profile.textContent += `Profile: `
+  profileURL.setAttribute('href', `${data.html_url}`)
+  profileURL.textContent = `${data.html_url}`
+  profile.appendChild(profileURL)
   userFollowers.textContent = `Followers: ${data.followers}`
   userFollowing.textContent = `Following: ${data.following}`
   userBio.textContent = `Bio: ${data.bio}`
 
-return card
+  return card
 }
 
 
@@ -138,4 +135,10 @@ return card
     justsml
     luishrd
     bigknell
+
+    profile.textContent = `Profile: `;
+  profileURL.textContent = `${data.html_url}`
+  profileURL.setAttribute('href', `${data.html_url}`)
+  profile.appendChild(profileURL)
+o seu profile.appendChild(profileURL) tem que rodar somente depois que vc ja tiver setado o seu profileURL attribute
 */
